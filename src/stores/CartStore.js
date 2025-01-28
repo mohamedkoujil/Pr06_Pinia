@@ -23,7 +23,7 @@ export const useCartStore = defineStore("CartStore", () => {
       cart.value.splice(index, 1);
     }
   };
-  const removeItemAll = (item) => {
+  const clearItem = (item) => {
     cart.value = cart.value.filter((i) => i.name !== item.name);
   };
   const productCount = (item) => {
@@ -37,6 +37,12 @@ export const useCartStore = defineStore("CartStore", () => {
     const index = cart.value.findIndex((i) => i.name === item.name);
     if (index !== -1) {
       cart.value.splice(index, 1);
+    }
+  };
+  const setItemCount = (item, count) => {
+    cart.value = cart.value.filter((i) => i.name !== item.name);
+    for (let i = 0; i < count; i++) {
+      cart.value.push(item);
     }
   };
   const totalPrice = () => {
@@ -55,10 +61,11 @@ export const useCartStore = defineStore("CartStore", () => {
     getItemsCount,
     addToCart,
     removeItem,
-    removeItemAll,
+    clearItem,
     productCount,
     addItem,
     deleteItem,
+    setItemCount,
     totalPrice,
     isEmpty,
     clearCart,

@@ -12,8 +12,9 @@ const {
   addToCart,
   totalItems,
   removeItem,
-  removeItemAll,
+  clearItem,
   productCount,
+  setItemCount,
   addItem,
   totalPrice,
   isEmpty,
@@ -39,8 +40,8 @@ const active = ref(false);
             :key="item.name"
             :product="{ name: item.name, price: item.price }"
             :count="productCount(item)"
-            @updateCount="addItem(item)"
-            @clear="removeItemAll(item)"
+            @updateCount="setItemCount(item, $event)"
+            @clear="clearItem(item)"
           />
         </ul>
         <div class="flex justify-end text-2xl mb-5">
