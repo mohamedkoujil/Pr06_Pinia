@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref, computed } from "vue";
 import { groupBy } from "lodash";
 import { useAuthUserStore } from "./AuthUserStore";
@@ -15,9 +15,9 @@ export const useCartStore = defineStore("CartStore", () => {
   });
 
   const getUniqueItems = computed(() => {
-    return Object.keys(groupedItems.value).map(
-      (name) => groupedItems.value[name][0]
-    );
+    return Object.keys(groupedItems.value)
+      .map((name) => groupedItems.value[name][0])
+      .sort((a, b) => a.name.localeCompare(b.name));
   });
 
   const getItemsCount = computed(() => {
@@ -93,3 +93,8 @@ export const useCartStore = defineStore("CartStore", () => {
     checkout,
   };
 });
+
+// HMR module update
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot));
+}
